@@ -41,6 +41,7 @@ class SendTracker {
         this.xhr.onerror = function(error) {
 
         }
+        console.log('本次上报的日志', log)
         this.xhr.send(body);
     }
 }

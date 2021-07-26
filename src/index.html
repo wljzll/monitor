@@ -6,33 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>前端监控SDK</title>
-
 </head>
 
 <body>
     <div id="container">
         <div class="content">
-            <input type="button" value="点击抛出错误" onclick="errorClick()" />
-            <input type="button" value="点击抛出Promise错误" onclick="promiseErrorClick()">
+            <input type="button" value="发起ajax成功请求" onclick="sendAjaxSuccess()" />
+            <input type="button" value="发起ajax失败请求" onclick="sendAjaxError()" />
         </div>
     </div>
     <script>
-        function errorClick() {
-            window.someVar.error = 'error';
+        function sendAjaxSuccess() {
+            let xhr = new XMLHttpRequest;
+            xhr.open('GET', '/success', true);
+            xhr.responseType = 'json';
+            xhr.onload = function() {
+                console.log(xhr.response);
+            }
+            xhr.send();
         }
 
-        function promiseErrorClick() {
-            new Promise((resolve, reject) => {
-                console.log(window.someVar.error = 'error');
-                // reject()
-            }).then(() => {
-                console.log('success');
-            })
+        function sendAjaxError() {
+            let xhr = new XMLHttpRequest;
+            xhr.open('POST', '/error', true);
+            xhr.responseType = 'json';
+            xhr.onload = function() {
+                console.log(xhr.response);
+            }
+            xhr.onerror = function(error) {
+                console.log(error);
+            }
+            xhr.send("name=zhufeng");
         }
     </script>
-    <!-- 这里需要注意这个错误资源文件和monitor.js SDK文件的加载顺序 -->
-    <script defer src="sourceError.js"></script>
 </body>
-
 
 </html>

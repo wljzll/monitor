@@ -11,7 +11,16 @@ module.exports = {
     },
     devServer: {
         publicPath: '/',
-        contentBase: path.resolve(__dirname, 'dist')
+        contentBase: path.resolve(__dirname, 'dist'),
+        // 用来配置路由 express服务器
+        before(router) {
+            router.get('/success', function(req, res) {
+                res.json({ id: 1 });
+            });
+            router.post('/error', function(req, res) {
+                res.sendStatus(500);
+            });
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({
